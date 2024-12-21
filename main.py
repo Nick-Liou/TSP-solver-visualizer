@@ -73,16 +73,33 @@ def visualize_tour(G: nx.Graph, tour: list[int]) -> None:
     plt.show()
 
 
+def tour_cost(G: nx.Graph, tour: list[int]) -> float:
+    """
+    Calculate the total cost of a given tour in a graph.
+
+    Parameters:
+    - G: A NetworkX graph where edge weights represent distances or costs.
+    - tour: A list of nodes representing the order in which they are visited.
+
+    Returns:
+    - The total cost of the tour.
+    """
+    total_cost = 0
+
+    # Iterate through consecutive pairs in the tour
+    for i in range(len(tour) - 1):
+        u, v = tour[i], tour[i + 1]
+        total_cost += G[u][v]['weight']  # Add the weight of the edge
+
+    return total_cost
+
+
 
 
 # --- MAIN EXECUTION ---
 def main() -> None:
-    
-    # Example usage
 
     # PART A: Parse a TSPLIB file
-    file_path = "Example_problems/bayg29.tsp"  # Replace with the actual file path
-
     file_path = file_paths.select_file(file_types=[("TSP files" , "*.tsp"),("ATSP files" , "*.atsp")] , initial_dir= "/Example_problems")
 
     problem = parse_tsplib_file(file_path)
@@ -102,10 +119,15 @@ def main() -> None:
 
     # PART B: Solve TSP using heuristics
     nn_tour = nx.approximation.greedy_tsp(G)
-    print("Nearest Neighbor Tour:", nn_tour)
+    print("Nearest Neighbor Tour:\n", nn_tour)
 
     sa_tour = nx.approximation.simulated_annealing_tsp(G, "greedy")
-    print("Simulated Annealing Tour:", sa_tour)
+    print("Simulated Annealing Tour:\n", sa_tour)
+
+    christofides_tour =  nx.approximation.christofides(G)    
+    print("Simulated Christofides Tour:\n", christofides_tour)
+
+    # print("Done with tour calculations")
     
 
     # PART C: Visualize the tours
@@ -114,6 +136,16 @@ def main() -> None:
 
     print("Visualizing Simulated Annealing Tour")
     visualize_tour(G,sa_tour)
+
+    print("Visualizing Christofides Tour")
+    visualize_tour(G,christofides_tour)
+
+
+    
+    print(f"Total cost of the Nearest Neighbor Tour: {tour_cost(G,nn_tour)}") 
+    print(f"Total cost of the Simulated Annealing Tour: {tour_cost(G,sa_tour)}") 
+    print(f"Total cost of the Christofides Tour: {tour_cost(G,christofides_tour)}") 
+    
 
 
 if __name__ == "__main__":
