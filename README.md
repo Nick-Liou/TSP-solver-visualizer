@@ -1,22 +1,22 @@
-[![Mypy](https://github.com/Nick-Liou/Python_template/actions/workflows/mypy.yml/badge.svg)](https://github.com/Nick-Liou/Python_template/actions/workflows/mypy.yml)
-[![Tests](https://github.com/Nick-Liou/Python_template/actions/workflows/pytest.yml/badge.svg)](https://github.com/Nick-Liou/Python_template/actions/workflows/pytest.yml)
+[![Mypy](https://github.com/Nick-Liou/TSP-solver-visualizer/actions/workflows/mypy.yml/badge.svg)](https://github.com/Nick-Liou/TSP-solver-visualizer/actions/workflows/mypy.yml)
+[![Tests](https://github.com/Nick-Liou/TSP-solver-visualizer/actions/workflows/pytest.yml/badge.svg)](https://github.com/Nick-Liou/TSP-solver-visualizer/actions/workflows/pytest.yml)
 
-# Python_template
-A template for Python projects with github actions for 
-- tests (with pytest)
-- type anotations (with Mypy)
-- automaticaly updating the badges and the Installation using the new username and repo name on creation
+# TSP-solver-visualizer
+ 
+ 
+ 
+ 
 
 
 ## Installation
 
 1. Clone this repository:   
     ```
-    git clone https://github.com/Nick-Liou/Python_template.git
+    git clone https://github.com/Nick-Liou/TSP-solver-visualizer.git
     ```
 2. Navigate to the project directory:   
     ```
-    cd Python_template
+    cd TSP-solver-visualizer
     ```
 3. Install the required dependencies using pip:
     ```
