@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import os
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 def create_hidden_root() -> tk.Tk:
     """
@@ -16,8 +16,8 @@ def create_hidden_root() -> tk.Tk:
 
 def select_file(
     window_title: str = "Select a file", 
-    file_types: List[Tuple[str, str]] | None = None,
-    initial_dir: str | None = None
+    file_types: Union[ List[Tuple[str, str]] , None ]= None,
+    initial_dir: Union[ str , None ] = None
 ) -> str:
     """
     Opens a file selection dialog for the user to choose a file.
