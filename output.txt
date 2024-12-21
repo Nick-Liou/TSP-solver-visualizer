@@ -1,0 +1,4 @@
+Problem Name: bayg29
+Problem Type: TSP
+Number of Nodes: 29
+Edge Weight Type: EXPLICIT
