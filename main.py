@@ -25,12 +25,12 @@ def parse_tsplib_file(file_path :str ) -> None:
         print("Number of Nodes:", problem.dimension)
         print("Edge Weight Type:", problem.edge_weight_type)
 
-        # Optionally, write to an output file
-        with open("output.txt", "w") as output_file:
-            output_file.write(f"Problem Name: {problem.name}\n")
-            output_file.write(f"Problem Type: {problem.type}\n")
-            output_file.write(f"Number of Nodes: {problem.dimension}\n")
-            output_file.write(f"Edge Weight Type: {problem.edge_weight_type}\n")
+        # # Optionally, write to an output file
+        # with open("output.txt", "w") as output_file:
+        #     output_file.write(f"Problem Name: {problem.name}\n")
+        #     output_file.write(f"Problem Type: {problem.type}\n")
+        #     output_file.write(f"Number of Nodes: {problem.dimension}\n")
+        #     output_file.write(f"Edge Weight Type: {problem.edge_weight_type}\n")
     except Exception as e:
         print("Error parsing TSPLIB file:", e)
 
@@ -42,11 +42,10 @@ def main() -> None:
      # Example usage
 
     # PART A: Parse a TSPLIB file
-    file_path = "your_tsplib_file.tsp"  # Replace with the actual file path
+    file_path = "Example_problems/bayg29.tsp"  # Replace with the actual file path
 
-    file_path = file_paths.select_file()
-    print(file_path)
-    
+    file_path = file_paths.select_file(file_types=[("TSP files" , "*.tsp"),("ATSP files" , "*.atsp")] , initial_dir= "/Example_problems")
+
     parse_tsplib_file(file_path)
 
     # Create a simple TSP graph for demonstration
