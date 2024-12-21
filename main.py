@@ -1,10 +1,10 @@
 
 # Import necessary libraries
-from typing import Any
 import tsplib95
 import networkx as nx
 import matplotlib.pyplot as plt
 
+# Import from another file/module
 import file_paths
 
 
@@ -24,14 +24,7 @@ def parse_tsplib_file(file_path :str ) -> tsplib95.models.Problem:
         print("Number of Nodes:", problem.dimension)
         print("Edge Weight Type:", problem.edge_weight_type)
 
-        return problem
-    
-        # # Optionally, write to an output file
-        # with open("output.txt", "w") as output_file:
-        #     output_file.write(f"Problem Name: {problem.name}\n")
-        #     output_file.write(f"Problem Type: {problem.type}\n")
-        #     output_file.write(f"Number of Nodes: {problem.dimension}\n")
-        #     output_file.write(f"Edge Weight Type: {problem.edge_weight_type}\n")
+        return problem    
     except Exception as e:
         print("Error parsing TSPLIB file:", e)
 
@@ -41,6 +34,10 @@ def parse_tsplib_file(file_path :str ) -> tsplib95.models.Problem:
 def visualize_tour(G: nx.Graph, tour: list[int]) -> None:
     """
     Visualize the TSP tour on a 2D plot.
+
+    Note that when plotting nodes in a Traveling Salesman Problem (TSP) 
+    on a 2D plane in a way that reflects the structure of the problem 
+    is imposible most of the times (unless it is Euclidean TSP).
 
     Parameters:
         graph (nx.Graph): A NetworkX graph representing the TSP instance.
@@ -127,8 +124,6 @@ def main() -> None:
     christofides_tour =  nx.approximation.christofides(G)    
     print("Simulated Christofides Tour:\n", christofides_tour)
 
-    # print("Done with tour calculations")
-    
 
     # PART C: Visualize the tours
     print("Visualizing Nearest Neighbor Tour")
@@ -140,8 +135,7 @@ def main() -> None:
     print("Visualizing Christofides Tour")
     visualize_tour(G,christofides_tour)
 
-
-    
+    # Calculate cost for each tour    
     print(f"Total cost of the Nearest Neighbor Tour: {tour_cost(G,nn_tour)}") 
     print(f"Total cost of the Simulated Annealing Tour: {tour_cost(G,sa_tour)}") 
     print(f"Total cost of the Christofides Tour: {tour_cost(G,christofides_tour)}") 
