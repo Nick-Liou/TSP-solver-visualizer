@@ -52,8 +52,8 @@ def select_file(
 def select_save_file_path(
     window_title: str = "Save As",
     default_name: str = "untitled.txt",
-    file_types: List[Tuple[str, str]] = [("TXT files", "*.txt"), ("All files", "*.*")],
-    initial_dir: str = os.getcwd(),
+    file_types: Union[List[Tuple[str, str]], None] = None,
+    initial_dir: Union[str, None] = None,
     default_extension: str = "txt"
 ) -> str:
     """
@@ -70,6 +70,23 @@ def select_save_file_path(
         str: Full path of the selected file, including name and extension. Returns an empty string if canceled.
     """
     root = create_hidden_root()
+
+    # Set default file types if not provided
+    file_types = file_types or [("TXT files", "*.txt"), ("All files", "*.*")]
+    
+    # Add "All Files" option if not already present
+    if ("All files", "*.*") not in file_types:
+        file_types.append(("All files", "*.*"))
+    
+    # Automatically combine extensions into a "combined filter"
+    combined_extensions = " ".join(ft[1] for ft in file_types if ft[1] != "*.*")
+    if combined_extensions:
+        file_types.insert(0, ("Supported files", combined_extensions))
+    
+    # Ensure initial directory is valid
+    initial_dir = initial_dir or os.getcwd()
+
+    # Open the save file dialog
     file_path = filedialog.asksaveasfilename(
         title=window_title,
         initialdir=initial_dir,
@@ -77,4 +94,6 @@ def select_save_file_path(
         defaultextension=default_extension,
         filetypes=file_types
     )
-    return file_path
+
+    # Return the selected path, or an empty string if canceled
+    return file_path or ""
