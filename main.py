@@ -3,6 +3,7 @@
 import tsplib95
 import networkx as nx
 import matplotlib.pyplot as plt
+from typing import Union
 
 # Import from another file/module
 import file_paths
@@ -31,29 +32,29 @@ def parse_tsplib_file(file_path :str ) -> tsplib95.models.Problem:
 
 
 # --- PART C: Visualization ---
-def visualize_tour(G: nx.Graph, tour: list[int]) -> None:
+def visualize_tour(G: nx.Graph, tour: list[int], title: Union[str , None] = None) -> None:
     """
     Visualize the TSP tour on a 2D plot.
 
     Note that when plotting nodes in a Traveling Salesman Problem (TSP) 
     on a 2D plane in a way that reflects the structure of the problem 
-    is imposible most of the times (unless it is Euclidean TSP).
+    is impossible most of the time (unless it is Euclidean TSP).
 
     Parameters:
-        graph (nx.Graph): A NetworkX graph representing the TSP instance.
+        G (nx.Graph): A NetworkX graph representing the TSP instance.
         tour (list): The TSP tour (list of nodes in visiting order).
+        title (str, optional): Title of the plot.
     """
 
-    pos = nx.spring_layout(G, weight='weight' ) #, seed=42)
+    pos = nx.spring_layout(G, weight='weight')  # , seed=42)
     
     tour_edge_list = list(nx.utils.pairwise(tour))
     # Draw the graph with custom aesthetics
     nx.draw(G,
             pos, 
-        with_labels=True,              # Display node labels
-        connectionstyle='arc3,rad=0.1' # Curve the edges slightly to reduce overlap
-        )
-
+            with_labels=True,              # Display node labels
+            connectionstyle='arc3,rad=0.1' # Curve the edges slightly to reduce overlap
+            )
 
     # Draw the route
     nx.draw_networkx(
@@ -66,9 +67,12 @@ def visualize_tour(G: nx.Graph, tour: list[int]) -> None:
         width=3        
     )
 
+    # Add a title to the plot if provided
+    if title:
+        plt.gcf().suptitle(title, fontsize=14, fontweight="bold")
+
     # Display the graph    
     plt.show()
-
 
 def tour_cost(G: nx.Graph, tour: list[int]) -> float:
     """
@@ -113,7 +117,8 @@ def main() -> None:
         weight = problem.get_weight(*edge)
         G.add_edge(edge[0], edge[1], weight=weight)
 
-
+    print()
+    
     # PART B: Solve TSP using heuristics
     nn_tour = nx.approximation.greedy_tsp(G)
     print("Nearest Neighbor Tour:\n", nn_tour)
@@ -124,16 +129,19 @@ def main() -> None:
     christofides_tour =  nx.approximation.christofides(G)    
     print("Simulated Christofides Tour:\n", christofides_tour)
 
+    print("\nNote that when plotting nodes in a Traveling Salesman Problem (TSP) on a 2D plane in a way that reflects the structure of the problem is impossible most of the time (unless it is Euclidean TSP).\n")
 
     # PART C: Visualize the tours
     print("Visualizing Nearest Neighbor Tour")
-    visualize_tour(G,nn_tour)
+    visualize_tour(G,nn_tour,"Nearest Neighbor Tour")
 
     print("Visualizing Simulated Annealing Tour")
-    visualize_tour(G,sa_tour)
+    visualize_tour(G,sa_tour,"Simulated Annealing Tour")
 
     print("Visualizing Christofides Tour")
-    visualize_tour(G,christofides_tour)
+    visualize_tour(G,christofides_tour,"Christofides Tour")
+
+    print()
 
     # Calculate cost for each tour    
     print(f"Total cost of the Nearest Neighbor Tour: {tour_cost(G,nn_tour)}") 
@@ -144,6 +152,4 @@ def main() -> None:
 
 if __name__ == "__main__":
 
-    # main()
-
-    print(file_paths.select_save_file_path())
+    main()
