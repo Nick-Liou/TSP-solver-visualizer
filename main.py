@@ -101,7 +101,7 @@ def tour_cost(G: nx.Graph, tour: list[int]) -> float:
 def main() -> None:
 
     # PART A: Parse a TSPLIB file
-    file_path = file_paths.select_file(file_types=[("TSP files" , "*.tsp"),("ATSP files" , "*.atsp")] , initial_dir= "/Example_problems")
+    file_path = file_paths.select_file(file_types=[("TSP files" , "*.tsp"),("ATSP files" , "*.atsp")] , initial_dir= "./Example_problems")
 
     problem = parse_tsplib_file(file_path)
 
